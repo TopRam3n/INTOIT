@@ -1,33 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
-import './index.css'
-import { applyTheme, prefersReducedMotion } from '@/lib/utils'
 
-// Apply stored theme on boot
-const stored = localStorage.getItem('intoit-store-v1')
-if (stored) {
-  try {
-    const parsed = JSON.parse(stored)
-    const theme = parsed?.state?.user?.theme
-    if (theme) applyTheme(theme)
-  } catch { /* ignore */ }
-}
-
-// Respect system reduced-motion preference
-if (prefersReducedMotion()) {
-  document.documentElement.classList.add('reduce-motion')
-}
-
-// Register service worker (PWA)
-if ('serviceWorker' in navigator && import.meta.env.PROD) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').catch(console.error)
-  })
-}
+// Fonts
+const link = document.createElement('link')
+link.rel = 'stylesheet'
+link.href = 'https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap'
+document.head.appendChild(link)
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <React.StrictMode><App /></React.StrictMode>
 )
